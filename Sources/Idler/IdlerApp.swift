@@ -83,10 +83,13 @@ class SleepBlocker: ObservableObject {
 
     private func nudgeMouse() {
         let loc = NSEvent.mouseLocation
-        // NSEvent coordinates are flipped (origin bottom-left), CGEvent uses top-left
-        let screenHeight = NSScreen.main?.frame.height ?? 0
-        let cgPoint = CGPoint(x: loc.x + 1, y: screenHeight - loc.y)
-        let cgPointBack = CGPoint(x: loc.x, y: screenHeight - loc.y)
+        // NSEvent uses bottom-left origin in global coordinates.
+        // CGEvent uses top-left origin relative to the primary screen.
+        // Primary screen's maxY gives us the global top edge for the conversion.
+        let primaryHeight = NSScreen.screens.first?.frame.maxY ?? 0
+        let cgY = primaryHeight - loc.y
+        let cgPoint = CGPoint(x: loc.x + 1, y: cgY)
+        let cgPointBack = CGPoint(x: loc.x, y: cgY)
 
         if let moveRight = CGEvent(mouseEventSource: nil, mouseType: .mouseMoved,
                                     mouseCursorPosition: cgPoint, mouseButton: .left) {
