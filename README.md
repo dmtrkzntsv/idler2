@@ -2,6 +2,8 @@
 
 A tiny macOS menu bar app that keeps your Mac awake. One click to prevent sleep — no more interrupted downloads, builds, or long-running processes.
 
+> Rewrite of the [original Go version](https://github.com/alexrett/idler) in Swift — native SwiftUI, zero dependencies, single binary.
+
 <p align="center">
   <img src="screenshots/sleep-allowed.png" width="240" alt="Sleep allowed">
   &nbsp;&nbsp;&nbsp;
